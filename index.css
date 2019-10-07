@@ -1,0 +1,80 @@
+* {
+  box-sizing: border-box;
+  list-style: none;
+}
+h1{
+  
+  
+    text-align: center;
+}
+form{
+  display: flex;
+  justify-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+body{
+ 
+  font-family: 'Roboto', sans-serif;
+}
+.movies{
+  margin-bottom: 10px;
+  display: flex;
+}
+.actors{
+  display: flex;
+  margin-bottom: 10px;
+}
+label{
+  margin-right: 5px;
+  display: inline-flex;
+  
+ 
+}
+
+.button {
+  border-color: grey;
+  background-color: grey;
+  padding: auto;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.error-message {
+    color: red;
+}
+
+.hidden {
+  display: none;
+}
+
+#results-list li:nth-child(odd) {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+dl {
+  overflow: hidden;
+  border-bottom: 1px black solid;
+}
+
+dt {
+  display: inline-block;
+  float: left;
+  width: 100px;
+  clear: left;
+  margin: 0 1em 0 0;
+  padding: 0;
+}
+
+dd {
+  float: left;
+  margin: 0;
+  padding: 0;
+}
