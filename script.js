@@ -180,10 +180,10 @@ function renderResults(reviews){
         <dl>
           <dt>Author:</dt>
           <dd>${review.author}</dd>
-          <dt>Review URL:</dt>
-          <dd><a href="${review.url}">Link</a></dd>
           <dt>Summary:</dt>
           <dd>${summarise(review.content)}</dd>
+          <dt>Review URL:</dt>
+          <dd><a href="${review.url}" target="_blank">Continue Reading...</a></dd>
         </dl>
       </li>
     `)
@@ -191,6 +191,7 @@ function renderResults(reviews){
 
   return $('#results').removeClass('hidden');
 }
+
 
 function summarise(review) {
   if (review.length > 240)
