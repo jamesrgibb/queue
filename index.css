@@ -3,9 +3,12 @@
   list-style: none;
 }
 h1{
-  
-  
-    text-align: center;
+   text-align: center;
+   text-shadow: 1px 1px teal;
+   text-decoration: underline;
+}
+h2{
+  text-decoration: underline;
 }
 form{
   display: flex;
@@ -14,28 +17,30 @@ form{
   flex-direction: column;
 }
 body{
- 
-  font-family: 'Roboto', sans-serif;
+  font-family: 'PT Sans', sans-serif;
+  background-color: rgb(228, 226, 226);
+  color: teal;
 }
 .movies{
   margin-bottom: 10px;
   display: flex;
 }
-.actors{
-  display: flex;
-  margin-bottom: 10px;
-}
 label{
+  text-shadow: .25px .25px teal;
   margin-right: 5px;
   display: inline-flex;
-  
- 
+ }
+#search{
+  background-color: white;
+  font-family: 'PT Sans', sans-serif;
+  color: teal;
 }
-
 .button {
-  border-color: grey;
-  background-color: grey;
+  border-color: teal;
+  background-color: teal;
   padding: auto;
+  color: white;
+  border-radius: 2px; 
 }
 
 button:hover {
@@ -43,7 +48,7 @@ button:hover {
 }
 
 .container {
-  max-width: 600px;
+  width: 90%;
   margin: 0 auto;
 }
 
@@ -56,12 +61,18 @@ button:hover {
 }
 
 #results-list li:nth-child(odd) {
-  background: rgba(0, 0, 0, 0.3);
+  
 }
-
+a {
+  color: teal;
+}
+a:hover{
+  cursor: pointer;
+}
 dl {
   overflow: hidden;
-  border-bottom: 1px black solid;
+  border-bottom: 2px teal solid;
+  padding: 1em 20px 2em;
 }
 
 dt {
