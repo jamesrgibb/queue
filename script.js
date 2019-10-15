@@ -1,118 +1,11 @@
-/*
-function getMovies(searchTitle){
-    const api = '345649-moviesea-TSGG8UJ7';
-    const url = 'https://tastedive.com/api/similar';   
-    const params = formatQuery({
-        q: searchTitle,
-        type: 'movie',
-        // info: 1,
-        // limit: 10,
-        k: api,
-        callback: console.log
-    })    
-     return $.ajax({
-        url: url,
-        jsonp: 'callback',
-        dataType: 'jsonp',
-        data: {
-          q: searchTitle,
-          type: 'movie',
-          info: 1,
-           limit: 10,
-          k: api,
-        },
-        success: renderResults,
-        failure: renderError
-    })
-    }
-    
-    function renderError(err){
-        return $('#error-message')
-        .text(`Something went wrong:  ${err.message}`);
-    }
-    
-    function formatQuery(params){
-        const queryItems =
-        Object.keys(params)
-        .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
-        return queryItems.join('&');
-    }
-
-    function getReviews(searchID) {
-    const params2 = formatQuery({
-        "id": searchId,
-        "page": 1,
-        api_key: '77c592d3ee432d841bea6da44a795419'
-    })
-    const reviews = $.ajax({
-           url: 'https://api.themoviedb.org/3/search/reviews?' + params2,
-           success: renderReviews,
-            failure: renderError,
-})
-}
-
-function renderReviews(response){
-    $('#results-list').empty();
-    for (let results of response.results) {
-      console.log(result)
-        $('#results-list').append(
-            `<li><h3>Review</h3>
-            <p>${results.content}</p>            
-            </li>`
-        )
-    }
-    return $('#results').removeClass('hidden');
-}
-    function renderResults(data){
-        $('#results-list').empty();
-        for (let result of data.Similar.Results) {
-          console.log(result)
-          getReviews(result.Name);
-            $('#results-list').append(
-                `<li><h3>${result.Name}</h3>
-                <p>${result.wTeaser}</p>
-                <a href='${result.yUrl}'> Youtube Link</a>
-                
-                </li>`
-            )
-        }
-        return $('#results').removeClass('hidden');
-    }
-    function searchMovies() {
-        $('#form').submit(event=> {
-          event.preventDefault();
-          const searchTitle = $('#search').val();
-         
-              getMovies(searchTitle),
-             // getReviews(searchTitle)
-                   
-      }) 
-  }  
-
-//   function getMovieTrailersFor(movies) {
-//     // ['Home Alone', 'Terminator']
-//     movies = movies.map(movie => fetch('findtrailers.com/movies/' + movie))
-//     // [ PendingPromise<>, PendingPromise<> ]
-//     return Promise.all(movies)
-//   }    
-    $(function(){
-        console.log('app loaded');
-        $(searchMovies);
-    })
-
-*/
 
 
 
-// First make a call to tastedive to find movie titles
-$(function(){
-  console.log('app loaded');
-  $(searchMovies);
-})
 function searchMovies() {
+  
   $('#form').submit(event=> {
     event.preventDefault();
-    const searchTitle = $('#search').val();
+    let searchTitle = $('#search').val();
 $.ajax({
   url: 'https://tastedive.com/api/similar',
   jsonp: 'callback',
@@ -127,7 +20,7 @@ $.ajax({
   success: handleSuccess,
   failure: handleError
 })
-    
+})  
 function handleError(response) {
   console.log('ERROR:', response)
 }
@@ -136,7 +29,7 @@ function handleSuccess(response) {
   const titles = response.Similar.Results.map(r => r.Name)
   return getTmdbIds(titles) 
 }
-  })
+
 }
 
 function getTmdbIds(titles) {
@@ -172,18 +65,18 @@ async function getTmdbReviews(movies) {
 }
 
 function renderResults(reviews){
-
+  $('#results-list').html('');
   reviews.forEach((review, i ) => {
     $('#results-list').append(`
       <li>
         <h2>${review.title}</h2>
         <dl>
-          <dt>Author:</dt>
-          <dd>${review.author}</dd>
-          <dt>Summary:</dt>
+          <dt>Review Author: </dt>
+          <dd> ${review.author}</dd><br>        
+          <dt>Summary: </dt>
           <dd>${summarise(review.content)}</dd>
-          <dt>Review URL:</dt>
-          <dd><a href="${review.url}" target="_blank">Continue Reading...</a></dd>
+          <dt>Continue Reading:</dt>
+          <dd><a href="${review.url}" target="_blank">go to review</a></dd>
         </dl>
       </li>
     `)
@@ -195,10 +88,12 @@ function renderResults(reviews){
 
 function summarise(review) {
   if (review.length > 240)
-    review = review.substring(0, 240) + '…'
+    review = review.substring(0, 500) + '…'
   return formatSummary(review)
 }
 
 function formatSummary(review) {
-  return `<p>${review.replace(/\r\n/g,'\n\n').replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br />')}</p>` 
+  return `<p>${review.replace(/\r\n/g,'\n\n').replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br />')}</p>`; 
  }
+
+$(searchMovies);
