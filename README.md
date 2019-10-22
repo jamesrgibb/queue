@@ -6,3 +6,6 @@ Description: Uses the movie searched to find similar movies that the user might 
 The app pulls from two different API's asynchronously and displays the results at the same time. 
 
 Techonology Used: HTML CSS JavaScript jQuery
+
+![Image of Project2](/queue-screenshot2)
+![Image of Proejct3](/queue-screenshot3)
