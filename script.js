@@ -1,46 +1,43 @@
-
-
-
 function searchMovies() {
-  $('#form').submit(event=> {
+  $('#form').submit(event => {
     event.preventDefault();
-    let searchTitle = $('#search').val();  
-$.ajax({ // ajax call to the api
-  url: 'https://tastedive.com/api/similar',
-  jsonp: 'callback',
-  dataType: 'jsonp',
-  data: { // format the parameters
-    q: searchTitle,
-    type: 'movies',
-    info: 1,
-    limit: 10,
-    k: '345649-moviesea-TSGG8UJ7',
-  },
-  success: handleSuccess,
-  failure: handleError
-})
-})  
-function handleError(response) {
-  console.log('ERROR:', response)
-}
+    let searchTitle = $('#search').val();
+    $.ajax({ // ajax call to the api
+      url: 'https://tastedive.com/api/similar',
+      jsonp: 'callback',
+      dataType: 'jsonp',
+      data: { // format the parameters
+        q: searchTitle,
+        type: 'movies',
+        info: 1,
+        limit: 10,
+        k: '345649-moviesea-TSGG8UJ7',
+      },
+      success: handleSuccess,
+      failure: handleError
+    })
+  })
+  function handleError(response) {
+    console.log('ERROR:', response)
+  }
 
-function handleSuccess(response) {
-  const titles = response.Similar.Results.map(r => r.Name)
-  return getTmdbIds(titles) 
-}
+  function handleSuccess(response) {
+    const titles = response.Similar.Results.map(r => r.Name)
+    return getTmdbIds(titles)
+  }
 
 }
 
 function getTmdbIds(titles) {
   const url = 'https://api.themoviedb.org/3/search/movie'
-  const api = '77c592d3ee432d841bea6da44a795419' 
+  const api = '77c592d3ee432d841bea6da44a795419'
   const titlePromises = titles.map(t => fetch(`${url}?api_key=${api}&query=${t}`)) // fetch the titles of the movies that were reccomended
   return Promise.all(titlePromises)
     .then(res => Promise.all(res.map(r => r.json())))
     .then(res => res.map(d => d.results[0]))
     .then(data => data.map(d => ({ id: d.id, title: d.title })))
     .then(getTmdbReviews)
-    
+
 }
 
 async function getTmdbReviews(movies) {
@@ -49,22 +46,22 @@ async function getTmdbReviews(movies) {
   const promises = movies.map(m => fetch(`${url}/${m.id}/reviews?api_key=${api}`)) // take titles and fetch reviews for them
   Promise.all(promises)
     .then(res => Promise.all(res.map(r => r.json())))
-    .then(reviews => 
+    .then(reviews =>
       reviews.map((r, i) => {
         if (r.results.length)
           r.results[0].title = movies[i].title
         return r
       })
     )
-    .then(reviews => 
+    .then(reviews =>
       reviews.map(d => d.results[0]).filter(Boolean)
     )
     .then(renderResults)
 }
 
-function renderResults(reviews){
+function renderResults(reviews) {
   $('#results-list').html('');
-  reviews.forEach((review, i ) => {
+  reviews.forEach((review, i) => {
     $('#results-list').append(`
       <li>
         <h2>${review.title}</h2> //format the Html
@@ -80,7 +77,7 @@ function renderResults(reviews){
     `)
   })
 
-  return $('#results').removeClass('hidden'); 
+  return $('#results').removeClass('hidden');
 }
 
 
@@ -91,7 +88,7 @@ function summarise(review) {
 }
 
 function formatSummary(review) {
-  return `<p>${review.replace(/\r\n/g,'\n\n').replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br />')}</p>`; // adjust for line breaks and new lines
- }
+  return `<p>${review.replace(/\r\n/g, '\n\n').replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br />')}</p>`; // adjust for line breaks and new lines
+}
 
 $(searchMovies);
