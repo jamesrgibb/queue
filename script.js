@@ -2,15 +2,14 @@
 
 
 function searchMovies() {
-  
   $('#form').submit(event=> {
     event.preventDefault();
-    let searchTitle = $('#search').val();
-$.ajax({
+    let searchTitle = $('#search').val();  
+$.ajax({ // ajax call to the api
   url: 'https://tastedive.com/api/similar',
   jsonp: 'callback',
   dataType: 'jsonp',
-  data: {
+  data: { // format the parameters
     q: searchTitle,
     type: 'movies',
     info: 1,
@@ -35,7 +34,7 @@ function handleSuccess(response) {
 function getTmdbIds(titles) {
   const url = 'https://api.themoviedb.org/3/search/movie'
   const api = '77c592d3ee432d841bea6da44a795419' 
-  const titlePromises = titles.map(t => fetch(`${url}?api_key=${api}&query=${t}`))
+  const titlePromises = titles.map(t => fetch(`${url}?api_key=${api}&query=${t}`)) // fetch the titles of the movies that were reccomended
   return Promise.all(titlePromises)
     .then(res => Promise.all(res.map(r => r.json())))
     .then(res => res.map(d => d.results[0]))
@@ -47,7 +46,7 @@ function getTmdbIds(titles) {
 async function getTmdbReviews(movies) {
   const url = 'https://api.themoviedb.org/3/movie'
   const api = '77c592d3ee432d841bea6da44a795419'
-  const promises = movies.map(m => fetch(`${url}/${m.id}/reviews?api_key=${api}`))
+  const promises = movies.map(m => fetch(`${url}/${m.id}/reviews?api_key=${api}`)) // take titles and fetch reviews for them
   Promise.all(promises)
     .then(res => Promise.all(res.map(r => r.json())))
     .then(reviews => 
@@ -61,7 +60,6 @@ async function getTmdbReviews(movies) {
       reviews.map(d => d.results[0]).filter(Boolean)
     )
     .then(renderResults)
-    // https://api.themoviedb.org/3/movie/343611/reviews?api_key=77c592d3ee432d841bea6da44a795419
 }
 
 function renderResults(reviews){
@@ -69,7 +67,7 @@ function renderResults(reviews){
   reviews.forEach((review, i ) => {
     $('#results-list').append(`
       <li>
-        <h2>${review.title}</h2>
+        <h2>${review.title}</h2> //format the Html
         <dl>
           <dt>Review Author: </dt>
           <dd> ${review.author}</dd><br>        
@@ -82,18 +80,18 @@ function renderResults(reviews){
     `)
   })
 
-  return $('#results').removeClass('hidden');
+  return $('#results').removeClass('hidden'); 
 }
 
 
 function summarise(review) {
-  if (review.length > 240)
+  if (review.length > 240) // adjust the length of the reviews
     review = review.substring(0, 500) + '…'
   return formatSummary(review)
 }
 
 function formatSummary(review) {
-  return `<p>${review.replace(/\r\n/g,'\n\n').replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br />')}</p>`; 
+  return `<p>${review.replace(/\r\n/g,'\n\n').replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br />')}</p>`; // adjust for line breaks and new lines
  }
 
 $(searchMovies);
