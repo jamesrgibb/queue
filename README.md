@@ -7,6 +7,8 @@ The app pulls from two different API's asynchronously and displays the results a
 
 Techonology Used: HTML CSS JavaScript jQuery
 
-![Image of Header](/queue-header)
+
+![Image of Header](/Queue-Header)
+
 
 ![Image of Project3](/queue-screenshot3)
