@@ -42,7 +42,7 @@ h1{
 }
 
 label { 
-font-family: raceway, sans-serif;
+font-family: baker-signet-web;
 font-weight: 400;
 font-style: normal;
 color: white;
@@ -84,7 +84,6 @@ form{
   color: black;
 }
 input[type="text"] {
-  
   padding: 1rem;
   font-size: 1rem;
   border-radius: 3px;
