@@ -64,7 +64,7 @@ function renderResults(reviews) {
   reviews.forEach((review, i) => {
     $('#results-list').append(`
       <li>
-        <h2>${review.title}</h2> //format the Html
+        <h2>${review.title}</h2> 
         <dl>
           <dt>Review Author: </dt>
           <dd> ${review.author}</dd><br>        
